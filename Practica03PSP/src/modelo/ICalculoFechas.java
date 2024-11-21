@@ -1,9 +1,10 @@
 package modelo;
 
+import java.util.Calendar;
+
 public interface ICalculoFechas {
 
-	public boolean cumple() {
-		if ()
-	}
+	public boolean cumple(Calendar fechaApertura);
+
 	
 }

@@ -1,8 +1,9 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class CuentaAhorro extends Cuenta {
+public class CuentaAhorro extends Cuenta implements Serializable, ICalculoFechas {
 	
 	private Double interesAnual;
 	private Double porcentajeAhorro;
@@ -17,7 +18,10 @@ public class CuentaAhorro extends Cuenta {
 	public void setInteresAnual(Double interesAnual) {if (interesAnual >= 0) this.interesAnual = interesAnual;}
 	public Double getPorcentajeAhorro() {return porcentajeAhorro;}
 	public void setPorcentajeAhorro(Double porcentajeAhorro) {if (porcentajeAhorro >= 0) this.porcentajeAhorro = porcentajeAhorro;}
-	
-	
 
+	//Arreglar
+	@Override
+	public boolean cumple(Calendar fechaApertura) {
+		return false;
+	}
 }
