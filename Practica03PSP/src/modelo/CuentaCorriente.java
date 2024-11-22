@@ -21,7 +21,7 @@ public class CuentaCorriente extends Cuenta implements Serializable, ICalculoFec
 
 	//Arreglar
 	@Override
-	public boolean cumple(Calendar fechaApertura) {
+	public boolean cumple() {
 		return false;
 	}
 }

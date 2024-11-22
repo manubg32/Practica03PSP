@@ -21,7 +21,7 @@ public class CuentaAhorro extends Cuenta implements Serializable, ICalculoFechas
 
 	//Arreglar
 	@Override
-	public boolean cumple(Calendar fechaApertura) {
+	public boolean cumple() {
 		return false;
 	}
 }
