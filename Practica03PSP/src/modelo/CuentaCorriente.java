@@ -3,7 +3,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class CuentaCorriente extends Cuenta implements Serializable, ICalculoFechas {
+public class CuentaCorriente extends Cuenta implements Serializable {
 
 	private Double comisionMantenimiento;
 	private String tipoComision;

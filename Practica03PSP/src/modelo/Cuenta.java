@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Calendar;
 
-public class Cuenta {
+public class Cuenta implements ICalculoFechas {
 
 	private Integer numero;
 	private transient String titular;
@@ -28,5 +28,10 @@ public class Cuenta {
 	public void setSaldo(Double saldo) {if (saldo >= this.saldoMin) this.saldo = saldo;}
 	public Calendar getAperturaCuenta() {return aperturaCuenta;}
 	public void setAperturaCuenta(Calendar aperturaCuenta) {this.aperturaCuenta = aperturaCuenta;}
+
+	@Override
+	public boolean cumple() {
+		return aperturaCuenta.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) && aperturaCuenta.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+	}
 	
 }
