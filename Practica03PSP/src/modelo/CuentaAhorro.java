@@ -13,6 +13,7 @@ public class CuentaAhorro extends Cuenta implements Serializable {
 	public CuentaAhorro(Integer numero, String titular, Double saldo, Double saldoMin, Calendar aperturaCuenta, Double interesAnual, Double porcentajeAhorro) throws DineroInferiorException {
 		super(numero, titular, saldo, saldoMin, aperturaCuenta);
 		setInteresAnual(interesAnual);
+
 		setPorcentajeAhorro(porcentajeAhorro);
 	}
 

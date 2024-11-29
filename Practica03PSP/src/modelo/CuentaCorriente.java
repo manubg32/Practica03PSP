@@ -14,6 +14,7 @@ public class CuentaCorriente extends Cuenta implements Serializable {
 		super(numero, titular, saldo, saldoMin, aperturaCuenta);
 		setComisionMantenimiento(comisionMantenimiento);
 		setTipoComision(tipoComision);
+
 	}
 
 	public Double getComisionMantenimiento() {return comisionMantenimiento;}

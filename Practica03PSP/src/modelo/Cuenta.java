@@ -18,6 +18,7 @@ public class Cuenta implements ICalculoFechas, Serializable {
 		setTitular(titular);
 		setSaldo(saldo);
 		setSaldoMin(saldoMin);
+
 		setAperturaCuenta(aperturaCuenta);
 	}
 

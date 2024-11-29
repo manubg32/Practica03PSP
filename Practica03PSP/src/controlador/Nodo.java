@@ -10,6 +10,7 @@ public class Nodo<E> {
 
     public Nodo<E> getSiguiente() {
         return this.siguiente;
+
     }
 
     public void setSiguiente(Nodo<E> siguiente) {
