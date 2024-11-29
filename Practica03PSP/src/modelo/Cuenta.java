@@ -5,11 +5,8 @@ import controlador.DineroInferiorException;
 import java.io.Serializable;
 import java.util.Calendar;
 
-<<<<<<< HEAD
 public class Cuenta implements ICalculoFechas, Serializable {
-=======
-public class Cuenta {
->>>>>>> parent of f00c928 (commit)
+
 
 	private Integer numero;
 	private transient String titular;
@@ -42,7 +39,6 @@ public class Cuenta {
 	}
 	public Calendar getAperturaCuenta() {return aperturaCuenta;}
 	public void setAperturaCuenta(Calendar aperturaCuenta) {this.aperturaCuenta = aperturaCuenta;}
-<<<<<<< HEAD
 
 	@Override
 	public boolean cumple() {
@@ -50,7 +46,5 @@ public class Cuenta {
 	}
 
 }
-=======
-	
-}
->>>>>>> parent of f00c928 (commit)
+
+
