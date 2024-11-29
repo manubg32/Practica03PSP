@@ -10,11 +10,10 @@ public class CuentaCorriente extends Cuenta implements Serializable, ICalculoFec
 	private Double comisionMantenimiento;
 	private String tipoComision;
 
-	public CuentaCorriente(Integer numero, String titular, Double saldo, Double saldoMin, Calendar aperturaCuenta, Double comisionMantenimiento, String tipoComision) throws DineroInferiorException {
-		super(numero, titular, saldo, saldoMin, aperturaCuenta);
+	public CuentaCorriente(String titular, Double saldo, Double saldoMin, Calendar aperturaCuenta, Double comisionMantenimiento, String tipoComision) throws DineroInferiorException {
+		super(titular, saldo, saldoMin, aperturaCuenta);
 		setComisionMantenimiento(comisionMantenimiento);
 		setTipoComision(tipoComision);
-
 	}
 
 	public Double getComisionMantenimiento() {return comisionMantenimiento;}
