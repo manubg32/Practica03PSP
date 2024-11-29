@@ -5,7 +5,7 @@ import controlador.DineroInferiorException;
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class CuentaCorriente extends Cuenta implements Serializable {
+public class CuentaCorriente extends Cuenta implements Serializable, ICalculoFechas {
 
 	private Double comisionMantenimiento;
 	private String tipoComision;

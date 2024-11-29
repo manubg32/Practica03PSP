@@ -5,8 +5,13 @@ import controlador.DineroInferiorException;
 import java.io.Serializable;
 import java.util.Calendar;
 
+<<<<<<< HEAD
 public class CuentaAhorro extends Cuenta implements Serializable {
 
+=======
+public class CuentaAhorro extends Cuenta implements Serializable, ICalculoFechas {
+	
+>>>>>>> parent of f00c928 (commit)
 	private Double interesAnual;
 	private Double porcentajeAhorro;
 
