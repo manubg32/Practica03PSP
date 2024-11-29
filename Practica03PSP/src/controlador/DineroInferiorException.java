@@ -5,4 +5,5 @@ public class DineroInferiorException extends Exception{
         System.out.println("El saldo de la cuenta es inferior al saldo mínimo.");
     }
     
+    
 }
