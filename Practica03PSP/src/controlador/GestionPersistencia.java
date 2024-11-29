@@ -14,7 +14,7 @@ public class GestionPersistencia {
         }catch (FileNotFoundException e){
             //Hacer que salga un mensaje
         }catch(IOException e){
-            
+
             //Hacer que salga otro mensaje
         }
     }

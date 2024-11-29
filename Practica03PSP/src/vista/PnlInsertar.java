@@ -1,4 +1,5 @@
 package vista;
 
-public class PnlInsertar {
+public class PnlInsertar
+{
 }

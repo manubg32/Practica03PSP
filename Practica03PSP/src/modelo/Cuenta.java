@@ -22,6 +22,7 @@ public class Cuenta {
 		setTitular(titular);
 		setSaldo(saldo);
 		setSaldoMin(saldoMin);
+
 		setAperturaCuenta(aperturaCuenta);
 	}
 
