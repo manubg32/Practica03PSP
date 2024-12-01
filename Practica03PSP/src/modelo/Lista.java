@@ -1,14 +1,31 @@
-package controlador;
+package modelo;
 
 
-import modelo.Cuenta;
+import java.io.Serializable;
 
 //Prototipo por consola de la clase Lista
-public class Lista {
+public class Lista implements Serializable {
+    static final long serialVersionUID = 1L;
    private Nodo primero;
    private Nodo ultimo;
    public Lista() {}
 
+
+    public Nodo getPrimero() {
+        return primero;
+    }
+
+    public void setPrimero(Nodo primero) {
+        this.primero = primero;
+    }
+
+    public Nodo getUltimo() {
+        return ultimo;
+    }
+
+    public void setUltimo(Nodo ultimo) {
+        this.ultimo = ultimo;
+    }
 
    public void agregar(Object valor){
         Nodo nuevo = new Nodo();

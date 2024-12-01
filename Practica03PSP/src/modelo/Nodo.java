@@ -1,4 +1,4 @@
-package controlador;
+package modelo;
 import java.io.Serializable;
 
 public class Nodo implements Serializable {
@@ -31,5 +31,9 @@ public class Nodo implements Serializable {
 
     public void setValor(Object valor) {
         this.valor = valor;
+    }
+    @Override
+    public String toString() {
+        return valor.toString();
     }
 }

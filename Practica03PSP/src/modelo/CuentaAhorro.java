@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 
 public class CuentaAhorro extends Cuenta implements Serializable, ICalculoFechas {
-	
+
 	private Double interesAnual;
 	private Double porcentajeAhorro;
 

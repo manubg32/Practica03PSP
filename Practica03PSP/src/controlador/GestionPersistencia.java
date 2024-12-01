@@ -1,6 +1,7 @@
 package controlador;
 
 import modelo.Cuenta;
+import modelo.Lista;
 
 import javax.swing.*;
 import java.io.*;
@@ -10,7 +11,7 @@ import java.util.List;
 public class GestionPersistencia {
     private static final String NOMBRE_ARCHIVO = "Cuentas.dat";
 
-    public void guardarCuentas(List<Cuenta> cuentas){
+    public void guardarCuentas(Lista cuentas){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(NOMBRE_ARCHIVO))){
             oos.writeObject(cuentas);
         }catch (IOException e){
@@ -18,13 +19,14 @@ public class GestionPersistencia {
         }
     }
 
-    public List<Cuenta> cargarCuentas(String nombreArchivo){
-        List<Cuenta> cuentas = new ArrayList<>();
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nombreArchivo))){
-            cuentas = (List<Cuenta>) ois.readObject();
+    public Lista cargarCuentas(){
+        Lista cuentas = null;
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(NOMBRE_ARCHIVO))){
+            cuentas = (Lista) ois.readObject();
         } catch(ClassNotFoundException | IOException e){
             JOptionPane.showMessageDialog(null, "No se encontro el archivo");
         }
         return cuentas;
     }
+
 }
