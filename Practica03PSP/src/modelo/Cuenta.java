@@ -17,8 +17,8 @@ public class Cuenta implements ICalculoFechas, Serializable {
 	public Cuenta(String titular, Double saldoMin, Double saldo, Calendar aperturaCuenta) throws DineroInferiorException {
 		numero++;
 		setTitular(titular);
-		setSaldo(saldo);
 		setSaldoMin(saldoMin);
+		setSaldo(saldo);
 
 		setAperturaCuenta(aperturaCuenta);
 	}
