@@ -5,9 +5,14 @@ import modelo.Lista;
 
 public class GestionLista {
     static GestionPersistencia gp = new GestionPersistencia();
-    private static Lista cuentas = gp.cargarCuentas();
+    private static Lista cuentas;
+    private static int size= 0;
+
 
     public static Lista getLista(){
+        if(cuentas == null){
+            cuentas = new Lista();
+        }
         return cuentas;
     }
     public static void setLista(Lista c){
@@ -18,9 +23,13 @@ public class GestionLista {
     }
     public static void agregarCuenta(Cuenta c){
         cuentas.agregar(c);
+        size++;
     }
 
     public static void borrarLista(){
         setLista(new Lista());
+    }
+    public static int getSize(){
+        return size;
     }
 }

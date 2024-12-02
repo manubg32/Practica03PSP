@@ -2,6 +2,8 @@ package modelo;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 //Prototipo por consola de la clase Lista
 public class Lista implements Serializable {
@@ -27,20 +29,22 @@ public class Lista implements Serializable {
         this.ultimo = ultimo;
     }
 
-   public void agregar(Object valor){
+    public void agregar(Object valor){
         Nodo nuevo = new Nodo();
         nuevo.setValor(valor);
 
-        if(primero == null){
+        if(primero == null) {
+            // Si la lista está vacía, el nuevo nodo es el primero y el último
             primero = nuevo;
             ultimo = primero;
-        }else{
+        } else {
+            // Si la lista no está vacía, agregamos el nuevo nodo al final
             Nodo tmp = ultimo;
-            ultimo.setAnterior(tmp);
-            tmp.setSiguiente(ultimo);
+            ultimo.setSiguiente(nuevo); // Enlazamos el nodo anterior con el siguiente (nuevo nodo)
+            nuevo.setAnterior(tmp);     // Enlazamos el nuevo nodo con el nodo anterior (ultimo nodo)
+            ultimo = nuevo;             // Actualizamos el último nodo
         }
-
-   }
+    }
 
    public void eliminar(Object valor){
        Nodo tmp = null; // Nodo a eliminar
@@ -95,4 +99,18 @@ public class Lista implements Serializable {
        }
        System.out.println();
    }
+
+    /*Este metodo va a verificar si la lista esta vacia
+     si no esta vacia va a recorrer la lista enlazada y agregara
+     los nodos a la lista de nodos
+     */
+    public List<Nodo> obtenerNodos() {
+        List<Nodo> nodos = new ArrayList<>();
+        Nodo tmp = primero;
+        while (tmp != null) {
+            nodos.add(tmp);
+            tmp = tmp.getSiguiente();
+        }
+        return nodos;
+    }
 }

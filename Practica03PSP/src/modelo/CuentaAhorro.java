@@ -14,7 +14,6 @@ public class CuentaAhorro extends Cuenta implements Serializable, ICalculoFechas
 	public CuentaAhorro(String titular, Double saldoMin, Double saldo, Calendar aperturaCuenta, Double interesAnual, Double porcentajeAhorro) throws DineroInferiorException {
 		super(titular, saldoMin, saldo, aperturaCuenta);
 		setInteresAnual(interesAnual);
-
 		setPorcentajeAhorro(porcentajeAhorro);
 	}
 
@@ -27,5 +26,13 @@ public class CuentaAhorro extends Cuenta implements Serializable, ICalculoFechas
 	@Override
 	public boolean cumple() {
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "CuentaAhorro{" +
+				"interesAnual=" + interesAnual +
+				", porcentajeAhorro=" + porcentajeAhorro +
+				"} " + super.toString();
 	}
 }

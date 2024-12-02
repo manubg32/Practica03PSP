@@ -23,15 +23,15 @@ public class PnlIndividual extends JPanel {
 
 	private JLabel lblBlanco;
 	private JLabel lblNumeroCuenta;
-	private JLabel lblNumCuentaMostrado;
+	private static JLabel lblNumCuentaMostrado;
 	private JLabel lblTitular;
-	private JLabel lblTitularMostrado;
+	private static JLabel lblTitularMostrado;
 	private JLabel lblSaldo;
-	private JLabel lblSaldoMostrado;
+	private static JLabel lblSaldoMostrado;
 	private JLabel lblSaldoMinimo;
-	private JLabel lblSaldoMinimoMostrado;
+	private static JLabel lblSaldoMinimoMostrado;
 	private JLabel lblAperturaCuenta;
-	private JLabel lblAperturaCuentaMostrado;
+	private static JLabel lblAperturaCuentaMostrado;
 
 	public PnlIndividual() {
 		setLayout(new BorderLayout(0, 0));
@@ -90,14 +90,27 @@ public class PnlIndividual extends JPanel {
 		lblAperturaCuentaMostrado = new JLabel("");
 		pnlVista.add(lblAperturaCuentaMostrado);
 	}
-	private void addListeners(){
+	private void addListeners() {
+		btnSiguiente.addActionListener(e -> {
+			// Llamamos al método para mostrar la siguiente cuenta
+			GestionCuentas.mostrarSiguiente();
+		});
 
+		btnAnterior.addActionListener(e -> {
+			// Llamamos al método para mostrar la cuenta anterior
+			GestionCuentas.mostrarAnterior();
+		});
 	}
-	private void actualizarVista(){
-		Cuenta cuentaActual = (Cuenta) GestionCuentas.actual.getValor() ;
-		lblTitularMostrado.setText(cuentaActual.getTitular());
-		lblSaldoMostrado.setText(cuentaActual.getSaldo().toString());
-		lblSaldoMinimoMostrado.setText(cuentaActual.getSaldoMin().toString());
-		lblAperturaCuentaMostrado.setText(cuentaActual.getAperturaCuenta().toString());
+
+	public static void actualizarVista(Cuenta cuentaActual) {
+		if (cuentaActual != null) {
+			lblNumCuentaMostrado.setText(cuentaActual.getNumero().toString());
+			lblTitularMostrado.setText(cuentaActual.getTitular());
+			lblSaldoMostrado.setText(cuentaActual.getSaldo().toString());
+			lblSaldoMinimoMostrado.setText(cuentaActual.getSaldoMin().toString());
+			lblAperturaCuentaMostrado.setText(cuentaActual.getAperturaCuenta().toString());
+		}
 	}
+
+
 }

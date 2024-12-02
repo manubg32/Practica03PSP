@@ -26,4 +26,12 @@ public class CuentaCorriente extends Cuenta implements Serializable, ICalculoFec
 	public boolean cumple() {
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "CuentaCorriente{" +
+				"comisionMantenimiento=" + comisionMantenimiento +
+				", tipoComision='" + tipoComision + '\'' +
+				"} " + super.toString();
+	}
 }

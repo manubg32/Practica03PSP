@@ -18,7 +18,7 @@ public class Cuenta implements ICalculoFechas, Serializable {
 		numero++;
 		setTitular(titular);
 		setSaldoMin(saldoMin);
-		setSaldo(saldo);
+        setSaldo(saldo);
 
 		setAperturaCuenta(aperturaCuenta);
 	}
@@ -44,6 +44,16 @@ public class Cuenta implements ICalculoFechas, Serializable {
 		return aperturaCuenta.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) && aperturaCuenta.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 	}
 
+	@Override
+	public String toString() {
+		return "Cuenta{" +
+				"numero=" + numero +
+				", titular='" + titular + '\'' +
+				", saldo=" + saldo +
+				", saldoMin=" + saldoMin +
+				", aperturaCuenta=" + aperturaCuenta.getTime() +
+				'}';
+	}
 }
 
 
