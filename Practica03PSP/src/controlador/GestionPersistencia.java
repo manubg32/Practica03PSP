@@ -1,32 +1,31 @@
 package controlador;
 
-import modelo.Cuenta;
 import modelo.Lista;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GestionPersistencia {
     private static final String NOMBRE_ARCHIVO = "Cuentas.dat";
 
-    public void guardarCuentas(Lista cuentas){
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(NOMBRE_ARCHIVO))){
+    // Guardar cuentas en el archivo
+    public void guardarCuentas(Lista cuentas) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(NOMBRE_ARCHIVO))) {
             oos.writeObject(cuentas);
-        }catch (IOException e){
-            JOptionPane.showMessageDialog(null, "Error al guardar el archivo: " + NOMBRE_ARCHIVO);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al guardar el archivo: " + NOMBRE_ARCHIVO + "\n" + e.getMessage());
         }
     }
 
-    public Lista cargarCuentas(){
-        Lista cuentas = null;
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(NOMBRE_ARCHIVO))){
+    // Cargar cuentas desde el archivo
+    public Lista cargarCuentas() {
+        Lista cuentas = new Lista(); // Inicializa con una nueva lista vacía
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(NOMBRE_ARCHIVO))) {
             cuentas = (Lista) ois.readObject();
-        } catch(ClassNotFoundException | IOException e){
-            JOptionPane.showMessageDialog(null, "No se encontro el archivo");
+        } catch (ClassNotFoundException | IOException e) {
+            // Si hay un error al cargar, puedes dejar cuentas como una lista vacía o mostrar un mensaje específico
+            JOptionPane.showMessageDialog(null, "No se encontró o no se pudo cargar el archivo.");
         }
-        return cuentas;
+        return cuentas;  // Retorna la lista, que podría estar vacía si hubo un error
     }
-
 }
