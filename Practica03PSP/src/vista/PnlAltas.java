@@ -72,12 +72,7 @@ public class PnlAltas extends JPanel {
 
 		btnBorrar.addActionListener(new ActionListener() {
 			 @Override public void actionPerformed(ActionEvent e) {
-				txtTitular.setText("");
-				txtSaldoMin.setText("");
-				txtSaldo.setText("");
-				txtFechaApertura.setText("");
-				txtCambiante1.setText("");
-				txtCambiante2.setText("");
+				vaciarCampos();
 			}
 		});
 
@@ -115,12 +110,15 @@ public class PnlAltas extends JPanel {
 							//Creamos una cuenta corriente y la agregamos a la lista
 							CuentaCorriente cc = new CuentaCorriente(txtTitular.getText(), Double.parseDouble(txtSaldoMin.getText()), Double.parseDouble(txtSaldo.getText()), calendario, Double.parseDouble(txtCambiante1.getText()), txtCambiante2.getText());
 							GestionLista.agregarCuenta(cc);
-
+							JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente", "Cuenta creada", JOptionPane.INFORMATION_MESSAGE);
+							vaciarCampos();
 						} else if (seleccion.equals("Cuenta ahorro")) {
 
 							//Creamos una cuenta ahorro y la agregamos a la lista
 							CuentaAhorro ca = new CuentaAhorro(txtTitular.getText(), Double.parseDouble(txtSaldoMin.getText()), Double.parseDouble(txtSaldo.getText()), calendario, Double.parseDouble(txtCambiante1.getText()), Double.parseDouble(txtCambiante2.getText()));
 							GestionLista.agregarCuenta(ca);
+							JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente", "Cuenta creada", JOptionPane.INFORMATION_MESSAGE);
+							vaciarCampos();
 						}
 
 					}
@@ -131,6 +129,15 @@ public class PnlAltas extends JPanel {
 				}
 			}
 		});
+	}
+
+	private void vaciarCampos() {
+		txtTitular.setText("");
+		txtSaldoMin.setText("");
+		txtSaldo.setText("");
+		txtFechaApertura.setText("");
+		txtCambiante1.setText("");
+		txtCambiante2.setText("");
 	}
 
 	private void ponerTodosNegros() {
