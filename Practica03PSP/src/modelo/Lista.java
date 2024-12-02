@@ -46,29 +46,31 @@ public class Lista implements Serializable {
        Nodo tmp = null; // Nodo a eliminar
        Nodo aux = null; // Nodo anterior al que eliminamos
 
-       if(primero !=null){
+       if(primero != null){
            if(primero.getValor() == valor){
-               //Eliminar el primero
+               // Eliminar el primero
                tmp = primero;
-               primero = tmp.getSiguiente();
-               if(primero == null){
+               primero = primero.getSiguiente();
+               if(primero == null){ // Si la lista queda vacía
                    ultimo = null;
-               }else {
+               } else {
                    primero.setAnterior(null);
                }
            } else if(ultimo.getValor() == valor){
+               // Eliminar el último
                tmp = ultimo;
-               ultimo = tmp.getAnterior();
+               ultimo = ultimo.getAnterior();
                ultimo.setSiguiente(null);
-           } else{
+           } else {
+               // Eliminar en el medio
                aux = primero;
                tmp = primero.getSiguiente();
-
                while(tmp != null){
                    if(tmp.getValor() == valor){
                        aux.setSiguiente(tmp.getSiguiente());
-                       tmp.getSiguiente().setAnterior(aux);
-
+                       if(tmp.getSiguiente() != null){
+                           tmp.getSiguiente().setAnterior(aux);
+                       }
                        break;
                    }
                    aux = tmp;
