@@ -2,29 +2,36 @@ package vista;
 
 import controlador.DineroInferiorException;
 import controlador.GestionCuentas;
+import controlador.GestionLista;
+import modelo.CuentaAhorro;
+import modelo.CuentaCorriente;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PnlAltas extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtTitular;
-	private JTextField txtSaldoMin;
-	private JTextField txtSaldo;
-	private JTextField txtFechaApertura;
-	private JTextField txtCambiante1;
-	private JTextField txtCambiante2;
-	private JLabel lblTipo;
-	private JComboBox<String> cmbTipo;
-	public JLabel lblTitular;
-	public JLabel lblSaldoMin;
-	public JLabel lblSaldo;
-	public JLabel lblAperturaCuenta;
-	public JLabel lblCambiante1;
-	public JLabel lblCambiante2;
+	public static JTextField txtTitular;
+	public static JTextField txtSaldoMin;
+	public static JTextField txtSaldo;
+	public static JTextField txtFechaApertura;
+	public static JTextField txtCambiante1;
+	public static JTextField txtCambiante2;
+	public static JLabel lblTipo;
+	public static JComboBox<String> cmbTipo;
+	public static JLabel lblTitular;
+	public static JLabel lblSaldoMin;
+	public static JLabel lblSaldo;
+	public static JLabel lblAperturaCuenta;
+	public static JLabel lblCambiante1;
+	public static JLabel lblCambiante2;
 	private JButton btnBorrar;
 	private JButton btnGuardar;
 
@@ -75,12 +82,46 @@ public class PnlAltas extends JPanel {
 		});
 
 		btnGuardar.addActionListener(new ActionListener() {
-
 			@Override public void actionPerformed(ActionEvent e) {
+
+				//Cada vez que pulsemos el boton ponemos las etiquetas a negro para hacer el resto de comprobaciones
+				ponerTodosNegros();
 				try {
-					//Cambiar a gc.ComprobarDatos
-					if (ComprobarDatos(cmbTipo.getSelectedItem() ,txtTitular.getText(), txtSaldoMin.getText(), txtSaldo.getText(), txtFechaApertura.getText(), txtCambiante1.getText(), txtCambiante2.getText()))
+					//Comprobamos que estén los datos introducidos y sean del tipo que se esperan
+					if (gc.ComprobarDatos(cmbTipo.getSelectedItem() ,txtTitular.getText(), txtSaldoMin.getText(), txtSaldo.getText(), txtFechaApertura.getText(), txtCambiante1.getText(), txtCambiante2.getText()))
 					{
+						String seleccion = (String) cmbTipo.getSelectedItem();
+
+						Calendar calendario = Calendar.getInstance();
+
+						//Parseamos el texto a Date y aunque no deberia haber problemas capturamos el error que pueda haber
+						SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+						try {
+							// Parsear el texto a Date
+							Date fecha = formato.parse(txtFechaApertura.getText());
+
+							// Convertir Date a Calendar
+							calendario = Calendar.getInstance();
+							calendario.setTime(fecha);
+
+						} catch (ParseException ex) {
+							// Manejar el error de formato
+							JOptionPane.showMessageDialog(null, "Formato de fecha inválido. Usa dd/MM/yyyy", "Hay un problemilla", JOptionPane.ERROR_MESSAGE);
+						}
+
+						//Depende del elemento que se esté dando de alta se crea uno u otro y se añade
+						if (seleccion.equals("Cuenta corriente")) {
+
+							//Creamos una cuenta corriente y la agregamos a la lista
+							CuentaCorriente cc = new CuentaCorriente(txtTitular.getText(), Double.parseDouble(txtSaldoMin.getText()), Double.parseDouble(txtSaldo.getText()), calendario, Double.parseDouble(txtCambiante1.getText()), txtCambiante2.getText());
+							GestionLista.agregarCuenta(cc);
+
+						} else if (seleccion.equals("Cuenta ahorro")) {
+
+							//Creamos una cuenta ahorro y la agregamos a la lista
+							CuentaAhorro ca = new CuentaAhorro(txtTitular.getText(), Double.parseDouble(txtSaldoMin.getText()), Double.parseDouble(txtSaldo.getText()), calendario, Double.parseDouble(txtCambiante1.getText()), Double.parseDouble(txtCambiante2.getText()));
+							GestionLista.agregarCuenta(ca);
+						}
 
 					}
 				} catch (DineroInferiorException ex){
@@ -91,81 +132,6 @@ public class PnlAltas extends JPanel {
 			}
 		});
 	}
-
-	private boolean ComprobarDatos(Object selectedItem, String titular, String saldoMin, String saldo, String fechaApertura, String cambiante1, String cambiante2) throws DineroInferiorException {
-
-		if (comprobarComunes(titular, saldoMin, saldo, fechaApertura)) {
-			if (selectedItem.equals("Cuenta corriente")) {
-
-				//Comprobamos la comision de mantenimiento
-				if (!cambiante1.isBlank()){
-					Double.parseDouble(txtCambiante1.getText());
-				} else {
-					lblCambiante1.setForeground(Color.RED);
-					JOptionPane.showMessageDialog(null, "La comision de mantenimiento no puede quedar vacio", "Hay un problemilla", JOptionPane.WARNING_MESSAGE);
-					return false;
-				}
-
-				//Comprobamos el tipo de comision
-				if (cambiante2.isBlank()){
-					lblCambiante2.setForeground(Color.RED);
-					JOptionPane.showMessageDialog(null, "El tipo de comisión no puede quedar vacio", "Hay un problemilla", JOptionPane.WARNING_MESSAGE);
-					return false;
-				}
-
-
-			} else if (selectedItem.equals("Cuenta ahorro")) {
-
-			}
-		} else {
-			return false;
-		}
-
-
-		return true;
-	}
-
-	private boolean comprobarComunes(String titular, String saldoMin, String saldo, String fechaApertura) throws DineroInferiorException {
-		//Comprobamos el titular
-		if (titular.isBlank()){
-			lblTitular.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "El titular no puede quedar vacio", "Hay un problemilla", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-
-		//Comprobamos el saldoMin
-		if (!saldoMin.isBlank()) {
-			Integer.parseInt(saldoMin);
-		} else{
-			lblSaldoMin.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "El saldoMin no puede quedar vacio", "Hay un problemilla", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-
-		//Comprobamos el saldo
-		if (!saldo.isBlank()){
-			Integer.parseInt(saldo);
-			//Comprobamos que sea mayor que el sueldoMin
-			if (Integer.parseInt(saldo) < Integer.parseInt(saldoMin)){
-				lblSaldo.setForeground(Color.RED);
-				lblSaldoMin.setForeground(Color.RED);
-				throw new DineroInferiorException();
-			}
-		} else {
-			lblSaldo.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "El saldo no puede quedar vacio", "Hay un problemilla", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-
-		//Comprobamos la FechaApertura
-		if (!fechaApertura.isBlank()) {
-			lblAperturaCuenta.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "La fecha de apertura  no puede quedar vacio", "Hay un problemilla", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		return true;
-	}
-
 
 	private void ponerTodosNegros() {
 		lblTitular.setForeground(Color.BLACK);
