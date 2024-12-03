@@ -1,21 +1,24 @@
 package modelo;
 
 import controlador.DineroInferiorException;
+import controlador.GestionCuentas;
+import controlador.GestionLista;
 
 import java.io.Serializable;
 import java.util.Calendar;
 
 public class Cuenta implements ICalculoFechas, Serializable {
 
+	private int numero;
+
 	private static final long serialVersionUID = 1L;
-	private Integer numero = 999;
 	private transient String titular;
 	private Double saldo;
 	private Double saldoMin;
 	private Calendar aperturaCuenta;
 
 	public Cuenta(String titular, Double saldoMin, Double saldo, Calendar aperturaCuenta) throws DineroInferiorException {
-		numero++;
+		this.numero = GestionCuentas.numero++;
 		setTitular(titular);
 		setSaldoMin(saldoMin);
         setSaldo(saldo);

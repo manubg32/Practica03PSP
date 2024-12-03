@@ -45,7 +45,6 @@ public class FrmPrincipal extends JFrame {
 	private JButton btnTest;
 
 	private GestionPersistencia gestionPersistencia;
-	private GestionCuentas gestionCuentas;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -125,7 +124,6 @@ public class FrmPrincipal extends JFrame {
 		pnlIndividual = new PnlIndividual();
 
 		gestionPersistencia = new GestionPersistencia();
-		gestionCuentas = new GestionCuentas();
 	}
 	void addListeners(){
 		btnCargar.addActionListener(new ActionListener() {
@@ -137,6 +135,7 @@ public class FrmPrincipal extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "No se pudieron cargar las cuentas", "Error", JOptionPane.ERROR_MESSAGE);
 				}			}
+
 		});
 		btnGuardar.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
@@ -204,9 +203,11 @@ public class FrmPrincipal extends JFrame {
 		mniIndividual.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				pnlIndividual.mostrarPrimero();
 				setContentPane(pnlIndividual);
 				revalidate();
 				repaint();
+
 			}
 		});
 		mniAltaCuenta.addActionListener(new ActionListener() {

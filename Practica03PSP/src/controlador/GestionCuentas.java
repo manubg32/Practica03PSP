@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 public class GestionCuentas {
+
+    public static Integer numero = 1000;
+
     private static Lista lstCuentas;
     public static Nodo actual;
     public GestionCuentas(){

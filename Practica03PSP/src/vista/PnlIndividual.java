@@ -1,16 +1,22 @@
 package vista;
 
 import controlador.GestionCuentas;
+import controlador.GestionLista;
 import modelo.Cuenta;
 import modelo.CuentaAhorro;
+import modelo.Lista;
+import modelo.Nodo;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.text.SimpleDateFormat;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class PnlIndividual extends JPanel {
+
+	Lista lista = GestionLista.getLista();
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +43,24 @@ public class PnlIndividual extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		addComponents();
 		addListeners();
+	}
+
+	public void mostrarPrimero() {
+
+		Nodo primero = lista.getPrimero();
+		Cuenta c = (Cuenta)primero.getValor();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		// Convertir Calendar a String
+		String fechaComoTexto = sdf.format(c.getAperturaCuenta().getTime());
+
+		lblNumCuentaMostrado.setText(c.getNumero().toString());
+		lblAperturaCuentaMostrado.setText(fechaComoTexto);
+		lblTitularMostrado.setText(c.getTitular());
+		lblSaldoMostrado.setText(c.getSaldo().toString());
+		lblSaldoMinimoMostrado.setText(c.getSaldo().toString());
+
 	}
 
 	private void addComponents(){
@@ -92,12 +116,12 @@ public class PnlIndividual extends JPanel {
 	}
 	private void addListeners() {
 		btnSiguiente.addActionListener(e -> {
-			// Llamamos al método para mostrar la siguiente cuenta
+			// Llamamos al méto do para mostrar la siguiente cuenta
 			GestionCuentas.mostrarSiguiente();
 		});
 
 		btnAnterior.addActionListener(e -> {
-			// Llamamos al método para mostrar la cuenta anterior
+			// Llamamos al méto do para mostrar la cuenta anterior
 			GestionCuentas.mostrarAnterior();
 		});
 	}
