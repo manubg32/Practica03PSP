@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.DineroInferiorException;
 import controlador.GestionCuentas;
 import controlador.GestionLista;
 import modelo.*;
@@ -10,6 +11,7 @@ import java.awt.GridLayout;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 public class PnlIndividual extends JPanel {
 
@@ -87,6 +89,7 @@ public class PnlIndividual extends JPanel {
 		}
 
 		mostrarCuenta();
+		comprobarBotonCalcular();
 
 		return true;
 	}
@@ -104,8 +107,29 @@ public class PnlIndividual extends JPanel {
 		}
 
 		mostrarCuenta();
+		comprobarBotonCalcular();
 
 		return true;
+	}
+
+	private static void comprobarBotonCalcular() {
+		Calendar fechaActual = Calendar.getInstance(); // Fecha actual
+
+		Cuenta c = (Cuenta) actual.getValor(); // Obtener la cuenta
+
+		// Comparar las fechas (solo día, mes y año)
+		if (esMismaFecha(c.getAperturaCuenta(), fechaActual)) {
+			btnCalcular.setEnabled(true); // Habilitar botón si las fechas coinciden
+		} else {
+			btnCalcular.setEnabled(false); // Deshabilitar botón si no coinciden
+		}
+	}
+
+	// Méto do auxiliar para comparar solo día, mes y año
+	private static boolean esMismaFecha(Calendar fecha1, Calendar fecha2) {
+		return fecha1.get(Calendar.YEAR) == fecha2.get(Calendar.YEAR) &&
+				fecha1.get(Calendar.MONTH) == fecha2.get(Calendar.MONTH) &&
+				fecha1.get(Calendar.DAY_OF_MONTH) == fecha2.get(Calendar.DAY_OF_MONTH);
 	}
 
 
@@ -210,6 +234,31 @@ public class PnlIndividual extends JPanel {
 		btnAnterior.addActionListener(e -> {
 			// Llamamos al méto do para mostrar la cuenta anterior
 			mostrarAnterior();
+		});
+
+		btnCalcular.addActionListener(e -> {
+			// Llamamos al méto do para calcular
+			if (actual.getValor() instanceof CuentaAhorro){
+				//Cuenta ahorro tiene interés anual (se incrementa)
+				Double interes = ((CuentaAhorro) actual.getValor()).getInteresAnual();
+				Double saldo = ((CuentaAhorro) actual.getValor()).getSaldo();
+				Double sumaInteres =  (saldo * interes) / 100;
+                try {
+                    ((CuentaAhorro) actual.getValor()).setSaldo(saldo + sumaInteres);
+					mostrarCuenta();
+                } catch (DineroInferiorException ignore) {}
+            } else if (actual.getValor() instanceof CuentaCorriente){
+				//Cuenta corriente tiene comision de mantenimiento (decrementa)
+				Double comision = ((CuentaCorriente) actual.getValor()).getComisionMantenimiento();
+				Double saldo = ((CuentaCorriente) actual.getValor()).getSaldo();
+				Double restaComision =  (saldo * comision) / 100;
+				try {
+					if (saldo - restaComision >= ((CuentaCorriente) actual.getValor()).getSaldoMin()){
+						((CuentaCorriente) actual.getValor()).setSaldo(saldo - restaComision);
+						mostrarCuenta();
+					}
+				} catch (DineroInferiorException ignore) {}
+			}
 		});
 	}
 
