@@ -68,7 +68,7 @@ public class FrmPrincipal extends JFrame {
 		setTitle("Doblenlazado");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		
+		setLocationRelativeTo(null);
 		addComponents();
 		addListeners();
 	}
