@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 public class CuentaCorriente extends Cuenta implements Serializable, ICalculoFechas {
-
+	private static final long serialVersionUID = 1L;
 	private Double comisionMantenimiento;
 	private String tipoComision;
 

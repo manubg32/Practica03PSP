@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 public class Cuenta implements ICalculoFechas, Serializable {
 
-
+	private static final long serialVersionUID = 1L;
 	private Integer numero = 999;
 	private transient String titular;
 	private Double saldo;

@@ -4,8 +4,7 @@ import modelo.Cuenta;
 import modelo.Lista;
 
 public class GestionLista {
-    static GestionPersistencia gp = new GestionPersistencia();
-    private static Lista cuentas;
+    private static Lista cuentas = GestionPersistencia.cargarCuentas();
     private static int size= 0;
 
 
@@ -19,7 +18,7 @@ public class GestionLista {
         cuentas = c;
     }
     public static void sobreescribir(){
-        gp.guardarCuentas(cuentas);
+        GestionPersistencia.guardarCuentas(cuentas);
     }
     public static void agregarCuenta(Cuenta c){
         cuentas.agregar(c);

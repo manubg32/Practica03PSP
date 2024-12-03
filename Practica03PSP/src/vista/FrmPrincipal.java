@@ -155,10 +155,6 @@ public class FrmPrincipal extends JFrame {
 		btnTest.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				Random random = new Random();
-				Calendar aperturaCuenta = Calendar.getInstance();
-				aperturaCuenta.set(Calendar.YEAR, 2010 + random.nextInt(10)); // Año entre 2010 y 2019
-				aperturaCuenta.set(Calendar.MONTH, random.nextInt(12)); // Mes aleatorio entre 0 y 11
-				aperturaCuenta.set(Calendar.DAY_OF_MONTH, random.nextInt(28) + 1); // Día aleatorio entre 1 y 28
 
 				// Crear cuentas de prueba con valores aleatorios
 				try {
@@ -173,12 +169,19 @@ public class FrmPrincipal extends JFrame {
 					GestionLista.agregarCuenta(cuentaCorriente1);
 					GestionLista.agregarCuenta(cuentaCorriente2);
 
-					for(int i = 0 ; i<500; i++){
-						CuentaCorriente cuenta1 = crearCuentaCorriente(random);
-						CuentaAhorro cuenta2 = crearCuentaAhorro(random);
-						GestionLista.agregarCuenta(cuenta2);
-						GestionLista.agregarCuenta(cuenta1);
+
+					int opcion = JOptionPane.showConfirmDialog(null, "¿Quieres Generar 1000 cuentas?", "Generar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if (opcion == JOptionPane.YES_OPTION) {
+						for(int i = 0 ; i<500; i++){
+							CuentaCorriente cuenta1 = crearCuentaCorriente(random);
+							CuentaAhorro cuenta2 = crearCuentaAhorro(random);
+							GestionLista.agregarCuenta(cuenta2);
+							GestionLista.agregarCuenta(cuenta1);
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Opcion Cancelada, se generarán 4 cuentas.", "Cancelar", JOptionPane.INFORMATION_MESSAGE);
 					}
+
 
 				}catch(DineroInferiorException ex){
 					JOptionPane.showMessageDialog(null, ex.mensaje, "Error", JOptionPane.ERROR_MESSAGE);
@@ -219,7 +222,7 @@ public class FrmPrincipal extends JFrame {
 	}
 	private CuentaAhorro crearCuentaAhorro(Random random) throws DineroInferiorException {
 		DecimalFormat formato = new DecimalFormat("#.00");
-		String titular = "Titular " + random.nextInt(100); // Titular aleatorio
+		String titular = "Titular Cuenta: " + random.nextInt(100); // Titular aleatorio
 
 		double saldoMinimo = 100 + random.nextDouble(1000); // Saldo mínimo aleatorio entre 100 y 1100
 		String saldoMinFormat = formato.format(saldoMinimo);
@@ -242,6 +245,9 @@ public class FrmPrincipal extends JFrame {
 		porcentajeAhorro = Double.parseDouble(porcentajeFormat);
 
 		Calendar aperturaCuenta = Calendar.getInstance();
+		aperturaCuenta.set(Calendar.YEAR, 2010 + random.nextInt(15));
+		aperturaCuenta.set(Calendar.MONTH, random.nextInt(12)); // Mes aleatorio entre 0 y 11
+		aperturaCuenta.set(Calendar.DAY_OF_MONTH, random.nextInt(28) + 1); // Día aleatorio entre 1 y 28
 
 
 
@@ -251,7 +257,7 @@ public class FrmPrincipal extends JFrame {
 
 	private CuentaCorriente crearCuentaCorriente(Random random) throws DineroInferiorException {
 		DecimalFormat formato = new DecimalFormat("#.00");
-		String titular = "Titular " + random.nextDouble(100); // Titular aleatorio
+		String titular = "Titular Cuenta: " + random.nextDouble(100); // Titular aleatorio
 
 		double saldoMinimo = 100 + random.nextDouble(1000); // Saldo mínimo aleatorio entre 100 y 1100
 		String saldoMinFormat = formato.format(saldoMinimo);
@@ -270,6 +276,9 @@ public class FrmPrincipal extends JFrame {
 
 		String tipoComision = random.nextBoolean() ? "Fija" : "Variable"; // Tipo de comisión aleatorio
 		Calendar aperturaCuenta = Calendar.getInstance();
+		aperturaCuenta.set(Calendar.YEAR, 2010 + random.nextInt(15));
+		aperturaCuenta.set(Calendar.MONTH, random.nextInt(12)); // Mes aleatorio entre 0 y 11
+		aperturaCuenta.set(Calendar.DAY_OF_MONTH, random.nextInt(28) + 1); // Día aleatorio entre 1 y 28
 
 
 		return new CuentaCorriente(titular, saldoMinimo,saldo, aperturaCuenta, comisionMantenimiento, tipoComision);
