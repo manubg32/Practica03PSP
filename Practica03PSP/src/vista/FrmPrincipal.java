@@ -18,9 +18,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Random;
+import java.util.*;
 
 public class FrmPrincipal extends JFrame {
 
@@ -33,11 +31,16 @@ public class FrmPrincipal extends JFrame {
 	private PnlIndividual pnlIndividual;
 
 	private JMenuBar menuBar;
+
 	private JMenu mnuAlta;
 	private JMenuItem mniAltaCuenta;
+
 	private	JMenu mnuVer;
 	private JMenuItem mniLista;
 	private JMenuItem mniIndividual;
+
+	private JMenu mnuPrincipal;
+	private JMenuItem mniPrincipal;
 
 	private JButton btnCargar;
 	private JButton btnGuardar;
@@ -74,6 +77,12 @@ public class FrmPrincipal extends JFrame {
 	void addComponents(){
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+
+		mnuPrincipal = new JMenu("Principal");
+		menuBar.add(mnuPrincipal);
+
+		mniPrincipal = new JMenuItem("Principal");
+		mnuPrincipal.add(mniPrincipal);
 
 		mnuAlta = new JMenu("Alta");
 		menuBar.add(mnuAlta);
@@ -126,6 +135,14 @@ public class FrmPrincipal extends JFrame {
 		gestionPersistencia = new GestionPersistencia();
 	}
 	void addListeners(){
+
+		mniPrincipal.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(contentPane);
+			}
+		});
+
 		btnCargar.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				Lista listaCuentas = gestionPersistencia.cargarCuentas();
@@ -171,12 +188,49 @@ public class FrmPrincipal extends JFrame {
 
 					int opcion = JOptionPane.showConfirmDialog(null, "¿Quieres Generar 1000 cuentas?", "Generar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (opcion == JOptionPane.YES_OPTION) {
+						//Empezamos a contar el tiempo
+						long tiempoInicio = System.currentTimeMillis();
+
 						for(int i = 0 ; i<500; i++){
+
+
+
 							CuentaCorriente cuenta1 = crearCuentaCorriente(random);
 							CuentaAhorro cuenta2 = crearCuentaAhorro(random);
 							GestionLista.agregarCuenta(cuenta2);
 							GestionLista.agregarCuenta(cuenta1);
 						}
+
+						long tiempoFin = System.currentTimeMillis();
+
+						// Calcular el tiempo transcurrido
+						long tiempoTotal = tiempoFin - tiempoInicio;
+
+						JOptionPane.showMessageDialog(null, "Con Lista y Nodo se ha tardado " + tiempoTotal + " ms.", "Tiempo", JOptionPane.INFORMATION_MESSAGE);
+
+
+
+						//Empezamos a contar el tiempo para la lista
+						long tiempoInicioLista = System.currentTimeMillis();
+
+						List<Cuenta> cuentas = new ArrayList<Cuenta>();
+
+						for(int i = 0 ; i<500; i++){
+							CuentaCorriente cuenta1 = crearCuentaCorriente(random);
+							CuentaAhorro cuenta2 = crearCuentaAhorro(random);
+							cuentas.add(cuenta2);
+							cuentas.add(cuenta1);
+						}
+
+						long tiempoFinLista = System.currentTimeMillis();
+
+						// Calcular el tiempo transcurrido
+						long tiempoTotalLista = tiempoFinLista - tiempoInicioLista;
+
+						JOptionPane.showMessageDialog(null, "Con Colecciones se ha tardado " + tiempoTotalLista + " ms.", "Tiempo", JOptionPane.INFORMATION_MESSAGE);
+
+
+
 					} else {
 						JOptionPane.showMessageDialog(null, "Opcion Cancelada, se generarán 4 cuentas.", "Cancelar", JOptionPane.INFORMATION_MESSAGE);
 					}
