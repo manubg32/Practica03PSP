@@ -30,9 +30,8 @@ public class CuentaAhorro extends Cuenta implements Serializable, ICalculoFechas
 
 	@Override
 	public String toString() {
-		return "CuentaAhorro{" +
+		return "CuentaAhorro"  + super.toString()+
 				"interesAnual=" + interesAnual +
-				", porcentajeAhorro=" + porcentajeAhorro +
-				"} " + super.toString();
+				", porcentajeAhorro=" + porcentajeAhorro;
 	}
 }

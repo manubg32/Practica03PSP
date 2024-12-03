@@ -23,30 +23,7 @@ public class GestionCuentas {
         lstCuentas = GestionLista.getLista();
     }
 
-    public static void mostrarSiguiente() {
-        if (actual == null) {
-            JOptionPane.showMessageDialog(null, "La lista está vacía", "Lista Vacia", JOptionPane.WARNING_MESSAGE);
-        } else {
-            if (actual.getSiguiente() != null) {
-                actual = actual.getSiguiente();
-                mostrarCuentaActual();
-            } else {
-                JOptionPane.showMessageDialog(null, "Ya estás en la última cuenta", "Final de la lista", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-    public static void mostrarAnterior() {
-        if (actual == null) {
-            JOptionPane.showMessageDialog(null, "La lista está vacía", "Lista Vacía", JOptionPane.WARNING_MESSAGE);
-        } else {
-            if (actual.getAnterior() != null) {
-                actual = actual.getAnterior();  // Solo movemos a la cuenta anterior si existe
-                mostrarCuentaActual();  // Mostrar la cuenta actual
-            } else {
-                JOptionPane.showMessageDialog(null, "Ya estás en la primera cuenta", "Inicio de la lista", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
+
 
     // Método para mostrar la cuenta actual
     private static void mostrarCuentaActual() {

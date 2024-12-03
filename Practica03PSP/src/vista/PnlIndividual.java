@@ -2,30 +2,32 @@ package vista;
 
 import controlador.GestionCuentas;
 import controlador.GestionLista;
-import modelo.Cuenta;
-import modelo.CuentaAhorro;
-import modelo.Lista;
-import modelo.Nodo;
+import modelo.*;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.text.SimpleDateFormat;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class PnlIndividual extends JPanel {
 
-	Lista lista = GestionLista.getLista();
+	static Lista lista = GestionLista.getLista();
+	private static LocalDate fechaActual = LocalDate.now();
+	private static DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static String fechaFormateada = fechaActual.format(formato);
+	private static Nodo actual;
+
 
 	private static final long serialVersionUID = 1L;
 
 	private JPanel pnlBotones;
 	private JPanel pnlVista;
 
-	private JButton btnCalcular;
-	private JButton btnAnterior;
-	private JButton btnSiguiente;
+	private static JButton btnCalcular;
+	private static JButton btnAnterior;
+	private static JButton btnSiguiente;
 
 	private JLabel lblBlanco;
 	private JLabel lblNumeroCuenta;
@@ -39,13 +41,16 @@ public class PnlIndividual extends JPanel {
 	private JLabel lblAperturaCuenta;
 	private static JLabel lblAperturaCuentaMostrado;
 
+
+
 	public PnlIndividual() {
 		setLayout(new BorderLayout(0, 0));
 		addComponents();
 		addListeners();
+
 	}
 
-	public void mostrarPrimero() {
+	public static void mostrarPrimero() {
 
 		Nodo primero = lista.getPrimero();
 		Cuenta c = (Cuenta)primero.getValor();
@@ -59,7 +64,89 @@ public class PnlIndividual extends JPanel {
 		lblAperturaCuentaMostrado.setText(fechaComoTexto);
 		lblTitularMostrado.setText(c.getTitular());
 		lblSaldoMostrado.setText(c.getSaldo().toString());
-		lblSaldoMinimoMostrado.setText(c.getSaldo().toString());
+		lblSaldoMinimoMostrado.setText(c.getSaldoMin().toString());
+
+	}
+	public static boolean mostrarSiguiente() {
+
+		if (actual == null) {
+
+			actual = lista.getPrimero();
+
+			if (actual == null) {
+				JOptionPane.showMessageDialog(null, "¡Lista Vacía!", "Información", JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}
+		} else {
+			actual = actual.getSiguiente();
+
+			if (actual == null) {
+				JOptionPane.showMessageDialog(null, "¡Has llegado al final de la lista!", "Información", JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}
+		}
+
+		mostrarCuenta();
+
+		return true;
+	}
+	public static boolean mostrarAnterior() {
+		if (actual == null) {
+			JOptionPane.showMessageDialog(null, "¡No hay nodo anterior!", "Información", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+
+		actual = actual.getAnterior();
+
+		if (actual == null) {
+			JOptionPane.showMessageDialog(null, "¡Estás en el primer nodo de la lista!", "Información", JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+
+		mostrarCuenta();
+
+		return true;
+	}
+
+
+
+	private static void mostrarCuenta() {
+		CuentaAhorro cca;
+		CuentaCorriente ccc;
+		try{
+
+			cca = (CuentaAhorro) actual.getValor();
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+			// Convertir Calendar a String
+			String fechaComoTexto = sdf.format(cca.getAperturaCuenta().getTime());
+
+
+			lblNumCuentaMostrado.setText(cca.getNumero().toString());
+			lblTitularMostrado.setText(cca.getTitular());
+			lblSaldoMinimoMostrado.setText(cca.getSaldoMin().toString());
+			lblSaldoMostrado.setText(cca.getSaldo().toString());
+			lblAperturaCuentaMostrado.setText(fechaComoTexto);
+
+		}catch(Exception e){
+
+			ccc = (CuentaCorriente) actual.getValor();
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+			// Convertir Calendar a String
+			String fechaComoTexto = sdf.format(ccc.getAperturaCuenta().getTime());
+
+			lblNumCuentaMostrado.setText(ccc.getNumero().toString());
+			lblTitularMostrado.setText(ccc.getTitular());
+			lblSaldoMinimoMostrado.setText(ccc.getSaldoMin().toString());
+			lblSaldoMostrado.setText(ccc.getSaldo().toString());
+			lblAperturaCuentaMostrado.setText(fechaComoTexto);
+
+
+		}
+
 
 	}
 
@@ -117,12 +204,12 @@ public class PnlIndividual extends JPanel {
 	private void addListeners() {
 		btnSiguiente.addActionListener(e -> {
 			// Llamamos al méto do para mostrar la siguiente cuenta
-			GestionCuentas.mostrarSiguiente();
+			mostrarSiguiente();
 		});
 
 		btnAnterior.addActionListener(e -> {
 			// Llamamos al méto do para mostrar la cuenta anterior
-			GestionCuentas.mostrarAnterior();
+			mostrarAnterior();
 		});
 	}
 

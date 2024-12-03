@@ -49,13 +49,12 @@ public class Cuenta implements ICalculoFechas, Serializable {
 
 	@Override
 	public String toString() {
-		return "Cuenta{" +
+		return
 				"numero=" + numero +
 				", titular='" + titular + '\'' +
 				", saldo=" + saldo +
 				", saldoMin=" + saldoMin +
-				", aperturaCuenta=" + aperturaCuenta.getTime() +
-				'}';
+				", aperturaCuenta=" + aperturaCuenta.getTime();
 	}
 }
 

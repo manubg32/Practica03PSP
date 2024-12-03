@@ -257,7 +257,7 @@ public class FrmPrincipal extends JFrame {
 		mniIndividual.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pnlIndividual.mostrarPrimero();
+				PnlIndividual.mostrarSiguiente();
 				setContentPane(pnlIndividual);
 				revalidate();
 				repaint();
